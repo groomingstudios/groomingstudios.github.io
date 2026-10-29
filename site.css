@@ -246,27 +246,6 @@ html.menu-open .menu nav a:nth-child(4) { transition-delay: .15s; }
 }
 @media (prefers-reduced-motion: reduce) { .btn.cut .half, .btn.cut .slit { transition-duration: .01s !important; } }
 
-/* ---------- Mauszeiger: kleine Rasierklinge (Klickpunkt = Spitze oben links) ---------- */
-/* PNG statt SVG: Safari zeigt SVG-Zeiger nicht an; scharfe Version für Retina über image-set */
-html, body {
-  cursor: url(icons/razor.png) 3 3, auto;
-  cursor: -webkit-image-set(url(icons/razor.png) 1x, url(icons/razor@2x.png) 2x) 3 3, auto;
-}
-a, button, summary, label, [role="button"], #gl.pick {
-  cursor: url(icons/razor.png) 3 3, pointer !important;
-  cursor: -webkit-image-set(url(icons/razor.png) 1x, url(icons/razor@2x.png) 2x) 3 3, pointer !important;
-}
-input, textarea, [contenteditable] { cursor: text; }
-
-/* ---------- Schnitt der Rasierklinge über Buttons (menu.js) ---------- */
-.razor-cut { position: absolute; inset: 0; z-index: 5; width: 100%; height: 100%; overflow: hidden; pointer-events: none; border-radius: inherit; }
-.razor-cut path {
-  fill: none; stroke: #000; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round;
-  /* feine helle Kante neben dem Schnitt, wie aufgeschnittenes Material */
-  filter: drop-shadow(.6px .8px 0 rgba(242, 239, 233, .55));
-}
-.razor-cut.heal path { transition: opacity .6s ease, stroke-width .6s ease; opacity: 0; stroke-width: 0; }
-
 /* ---------- Rechtliche Seiten: Impressum, Datenschutz, Widerrufsrecht ---------- */
 .legal {
   max-width: 820px; margin: 0 auto;

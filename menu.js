@@ -91,34 +91,4 @@
   toggle.addEventListener('click', () => setMenu(!isOpen()));
   menu.querySelectorAll('nav a').forEach(a => a.addEventListener('click', () => setMenu(false)));
   addEventListener('keydown', e => { if (e.key === 'Escape' && isOpen()) setMenu(false); });
-
-  // Rasierklinge schneidet Buttons an: Schnitt folgt genau dem Weg der Maus, heilt beim Verlassen wieder zu
-  const NS = 'http://www.w3.org/2000/svg', CUTTABLE = '.btn, .q-btn';
-  let cutting = null;   // { el, svg, path, pts }
-  function endCut() {
-    if (!cutting) return;
-    const { svg } = cutting;
-    svg.classList.add('heal');
-    setTimeout(() => svg.remove(), 700);
-    cutting = null;
-  }
-  addEventListener('pointermove', e => {
-    if (e.pointerType !== 'mouse') return;
-    const el = e.target.closest?.(CUTTABLE);
-    if (cutting && cutting.el !== el) endCut();
-    if (!el) return;
-    const r = el.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
-    if (!cutting) {
-      const svg = document.createElementNS(NS, 'svg'), path = document.createElementNS(NS, 'path');
-      svg.setAttribute('class', 'razor-cut'); svg.setAttribute('aria-hidden', 'true');
-      svg.append(path); el.append(svg);
-      cutting = { el, svg, path, pts: [] };
-    }
-    const p = cutting.pts, last = p[p.length - 1];
-    if (last && Math.hypot(x - last[0], y - last[1]) < 1.5) return;
-    p.push([x, y]);
-    if (p.length > 400) p.shift();
-    cutting.path.setAttribute('d', p.map((q, i) => (i ? 'L' : 'M') + q[0].toFixed(1) + ' ' + q[1].toFixed(1)).join(''));
-  }, { passive: true });
-  document.addEventListener('pointerleave', endCut);
 })();
