@@ -47,33 +47,6 @@
     </div>
     <div class="m-legal" data-legal></div>`;
 
-  // Buchen-Button mit dem Schrägschnitt aus dem Logo (das „OO“ in GROOMING):
-  // zwei deckungsgleiche Hälften, beim Hover setzt der Schnitt oben an, beim Klick geht er durch
-  const label = book.textContent.trim();
-  book.classList.add('cut');
-  book.setAttribute('aria-label', label);
-  book.innerHTML = `<span class="half a" aria-hidden="true"><span>${label}</span></span>` +
-                   `<span class="half b" aria-hidden="true"><span>${label}</span></span><i class="slit" aria-hidden="true"></i>`;
-  const SLANT = 0.2;   // Schnitt oben 20 % rechts der Mitte, unten 20 % links
-  function sizeCut() {
-    const w = book.offsetWidth, h = book.offsetHeight, dx = 2 * SLANT * w;
-    book.style.setProperty('--cut-a', Math.atan2(dx, h) + 'rad');
-    book.style.setProperty('--cut-h', Math.hypot(dx, h) * 1.25 + 'px');
-    // Hälften rücken senkrecht zum Schnitt auseinander
-    const l = Math.hypot(dx, h);
-    book.style.setProperty('--cut-x', (5 * h / l).toFixed(2) + 'px');
-    book.style.setProperty('--cut-y', (5 * dx / l).toFixed(2) + 'px');
-  }
-  addEventListener('resize', sizeCut);
-  document.fonts.ready.then(sizeCut);
-  sizeCut();
-  let rejoin;
-  book.addEventListener('click', () => {
-    book.classList.remove('split'); void book.offsetWidth; book.classList.add('split');
-    clearTimeout(rejoin);
-    rejoin = setTimeout(() => book.classList.remove('split'), 2200);   // wenn man aus der Buchung zurückkommt, ist er wieder ganz
-  });
-
   // gleicher Stapelkontext wie Logo und Buchen-Button
   book.before(toggle);
   book.parentNode.append(menu);
