@@ -6,6 +6,10 @@
   };
   window.GS_LINKS = LINKS;
 
+  // Rechtliche Links (Menü + Fußzeile aller Seiten)
+  const LEGAL = [['impressum.html', 'Impressum'], ['datenschutz.html', 'Datenschutz'], ['widerrufsrecht.html', 'Widerrufsrecht']];
+  const legalLinks = () => LEGAL.map(([h, t]) => `<a href="${h}"${location.pathname.endsWith('/' + h) ? ' aria-current="page"' : ''}>${t}</a>`).join('');
+
   const page = document.body.dataset.page;   // 'home' | 'team' | 'leistungen'
   const book = document.querySelector('.btn.book');
 
@@ -41,12 +45,7 @@
         Di – Fr: 9 – 21 Uhr<br>Sa: 8 – 18 Uhr<br>So &amp; Mo: Ruhetag
       </div>
     </div>
-    <div class="m-legal">
-      <a href="https://groomingstudios.de/impressum/" target="_blank" rel="noopener">Impressum</a>
-      <a href="https://groomingstudios.de/datenschutzerklarung/" target="_blank" rel="noopener">Datenschutz</a>
-      <a href="https://groomingstudios.de/agb/" target="_blank" rel="noopener">AGB</a>
-      <a href="https://groomingstudios.de/widerrufsrecht/" target="_blank" rel="noopener">Widerrufsrecht</a>
-    </div>`;
+    <div class="m-legal" data-legal></div>`;
 
   // Buchen-Button mit dem Schrägschnitt aus dem Logo (das „OO“ in GROOMING):
   // zwei deckungsgleiche Hälften, beim Hover setzt der Schnitt oben an, beim Klick geht er durch
@@ -78,6 +77,7 @@
   // gleicher Stapelkontext wie Logo und Buchen-Button
   book.before(toggle);
   book.parentNode.append(menu);
+  document.querySelectorAll('[data-legal]').forEach(el => { el.innerHTML = legalLinks(); });
 
   const root = document.documentElement;
   const isOpen = () => root.classList.contains('menu-open');
