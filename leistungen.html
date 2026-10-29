@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dienstleistungen &amp; Preise – Grooming Studios Waiblingen</title>
+<meta name="description" content="Haarschnitt ab 33 €, Haarschnitt &amp; Bart, Premium mit Nassrasur, Bartpflege und Kinderhaarschnitt in Waiblingen. Preise, Dauer und Online-Buchung.">
+<link rel="canonical" href="https://groomingstudios.de/leistungen.html">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="icons/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="icons/icon-192.png" sizes="192x192" type="image/png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<!-- Vorschau beim Teilen (WhatsApp, Instagram, Facebook …) -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Grooming Studios">
+<meta property="og:locale" content="de_DE">
+<meta property="og:title" content="Dienstleistungen &amp; Preise – Grooming Studios Waiblingen">
+<meta property="og:description" content="Haarschnitt ab 33 €, Haarschnitt &amp; Bart, Premium mit Nassrasur, Bartpflege und Kinderhaarschnitt in Waiblingen. Preise, Dauer und Online-Buchung.">
+<meta property="og:url" content="https://groomingstudios.de/leistungen.html">
+<meta property="og:image" content="https://groomingstudios.de/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Grooming Studios Logo">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="site.css">
+<style>
+  main {
+    max-width: 1240px; margin: 0 auto;
+    padding: calc(var(--head-total) + clamp(40px, 9vh, 110px)) clamp(16px, 4vw, 56px) 0;
+  }
+  .intro { max-width: 640px; }
+  .intro h1 {
+    margin-top: 18px;
+    font: 500 clamp(30px, 5vw, 60px)/1.05 "Inter", sans-serif; letter-spacing: .14em; text-transform: uppercase;
+  }
+  @media (max-width: 560px) { .intro h1 { font-size: 26px; letter-spacing: .1em; } }
+  .intro p { margin-top: 22px; font: 300 16px/1.65 "Inter", sans-serif; color: #cfccc6; }
+  .actions { margin-top: 32px; display: flex; flex-wrap: wrap; gap: 12px; }
+
+  /* Leistungen: Raster aus Karten, ganze Karte führt zur Buchung */
+  .services {
+    list-style: none;
+    margin-top: clamp(56px, 10vh, 110px);
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(28px, 3vw, 44px) clamp(16px, 2vw, 28px);
+  }
+  @media (max-width: 900px) { .services { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .services { grid-template-columns: 1fr; } }
+  .service a { display: block; color: inherit; text-decoration: none; }
+  .service .img { aspect-ratio: 1 / 1; overflow: hidden; border-radius: 3px; background: #0c0c0c; }
+  .service img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    filter: grayscale(1) contrast(1.05) brightness(.9);
+    transition: transform .7s cubic-bezier(.2, .7, .2, 1), filter .5s ease;
+  }
+  .service a:hover img, .service a:focus-visible img { transform: scale(1.04); filter: grayscale(.15) contrast(1.05) brightness(1); }
+  .service a:focus-visible { outline: none; }
+  .service .row {
+    margin-top: 18px; padding-bottom: 14px; border-bottom: 1px solid #262626;
+    display: flex; justify-content: space-between; align-items: baseline; gap: 16px;
+  }
+  .service h2 { font: 500 15px/1.3 "Inter", sans-serif; letter-spacing: .2em; text-transform: uppercase; }
+  .service .price { font: 400 15px/1 "Inter", sans-serif; white-space: nowrap; }
+  .service .cta {
+    margin-top: 12px; display: inline-block;
+    font: 400 11px/1 "Inter", sans-serif; letter-spacing: .24em; text-transform: uppercase; color: var(--muted);
+    transition: color .25s, transform .25s;
+  }
+  .service a:hover .cta, .service a:focus-visible .cta { color: var(--fg); transform: translateX(4px); }
+
+  .service .meta { margin-top: 12px; font: 400 11px/1.4 "Inter", sans-serif; letter-spacing: .2em; text-transform: uppercase; color: var(--fg); }
+  .service .meta span { color: var(--muted); margin: 0 .3em; }
+  .service .desc { margin-top: 10px; font: 300 14px/1.65 "Inter", sans-serif; color: #b9b6b0; }
+  .tax { margin-top: 28px; font: 400 11px/1.4 "Inter", sans-serif; letter-spacing: .14em; color: var(--muted); }
+
+  /* Gut zu wissen */
+  .know { margin-top: clamp(90px, 14vh, 160px); }
+  .know-list {
+    list-style: none; margin: clamp(36px, 6vh, 56px) 0 clamp(48px, 8vh, 72px);
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px clamp(20px, 3vw, 40px);
+  }
+  @media (max-width: 900px) { .know-list { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .know-list { grid-template-columns: 1fr; } }
+  .know-list h3 { font: 500 13px/1.3 "Inter", sans-serif; letter-spacing: .2em; text-transform: uppercase; }
+  .know-list h3::before { content: ""; display: block; width: 18px; height: 1px; margin-bottom: 14px; background: var(--fg); }
+  .know-list p { margin-top: 10px; font: 300 14px/1.65 "Inter", sans-serif; color: #b9b6b0; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .service img, .service .cta { transition: none; }
+  }
+</style>
+</head>
+<body data-page="leistungen">
+  <div class="site-head">
+    <a class="book btn" href="https://www.phorest.com/salon/groomingstudios" target="_blank" rel="noopener">Buchen</a>
+    <header class="brand">
+      <h1><a href="index.html"><img src="logo.webp" alt="Grooming Studios" width="2000" height="140"></a></h1>
+    </header>
+  </div>
+
+  <main>
+    <section class="intro">
+      <p class="eyebrow">Waiblingen</p>
+      <h1>Dienstleistungen</h1>
+      <p>Herzlich willkommen in deinem neuen Barbershop in der Region Waiblingen.</p>
+      <div class="actions">
+        <a class="btn" href="https://www.phorest.com/salon/groomingstudios" target="_blank" rel="noopener">Termin buchen</a>
+        <a class="btn" href="https://gift-cards.phorest.com/salons/groomingstudios" target="_blank" rel="noopener">Gutschein kaufen</a>
+      </div>
+    </section>
+
+    <!-- Preise, Bilder, Texte und Buchungslinks von groomingstudios.de -->
+    <ul class="services">
+      <li class="service"><a href="https://phore.st/Xari7" target="_blank" rel="noopener">
+        <div class="img"><img src="leistungen/haarschnitt.webp" alt="" width="360" height="360" loading="lazy"></div>
+        <div class="row"><h2>Haarschnitt</h2><span class="price">33 €</span></div>
+        <p class="meta">ca. 30 Min <span>·</span> Getränk aufs Haus</p>
+        <p class="desc">Wir starten mit einer Haarwäsche, dann nehmen wir uns Zeit für das, was dein Schnitt wirklich braucht – egal ob klassischer Barber Cut, Fade oder ein sauberer Look mit Kontur. Zum Schluss gibt’s das passende Finish mit hochwertigen Stylingprodukten.</p>
+        <span class="cta">Buchen →</span>
+      </a></li>
+      <li class="service"><a href="https://phore.st/2ROCE" target="_blank" rel="noopener">
+        <div class="img"><img src="leistungen/haarschnitt-bart.webp" alt="" width="360" height="360" loading="lazy"></div>
+        <div class="row"><h2>Haarschnitt &amp; Bart</h2><span class="price">45 €</span></div>
+        <p class="desc">Wir starten mit einer Haarwäsche, bringen deinen Schnitt sauber in Form und kümmern uns dann um deinen Bart – ob Konturen, Form oder kompletter Bart-Refresh. Zum Schluss: das richtige Styling und hochwertige Bartpflegeprodukte.</p>
+        <span class="cta">Buchen →</span>
+      </a></li>
+      <li class="service"><a href="https://phore.st/leeVg" target="_blank" rel="noopener">
+        <div class="img"><img src="leistungen/premium.webp" alt="" width="360" height="360" loading="lazy"></div>
+        <div class="row"><h2>Haarschnitt &amp; Bart Premium</h2><span class="price">63 €</span></div>
+        <p class="meta">ca. 60 Min <span>·</span> Getränk inklusive</p>
+        <p class="desc">Haarwäsche und Haarschnitt – ob klassischer Look, präziser Fade oder moderne Struktur, dein Stil steht im Mittelpunkt. Danach die ausführliche Bartpflege: klassische Nassrasur der Konturen oder komplette Rasur, mit warmer Kompresse zum Start und gepflegtem Finish zum Schluss.</p>
+        <span class="cta">Buchen →</span>
+      </a></li>
+      <li class="service"><a href="https://phore.st/teg9r" target="_blank" rel="noopener">
+        <div class="img"><img src="leistungen/bartpflege.webp" alt="" width="360" height="360" loading="lazy"></div>
+        <div class="row"><h2>Bartpflege</h2><span class="price">33 €</span></div>
+        <p class="desc">Wir starten mit einer warmen Kompresse, entspannen die Haut und bereiten den Bart optimal vor. Dann bringen wir Konturen und Form präzise in Einklang – ob gepflegte Länge, saubere Linien oder klassische Nassrasur der Konturen. Abgerundet mit hochwertigen Pflegeprodukten.</p>
+        <span class="cta">Buchen →</span>
+      </a></li>
+      <li class="service"><a href="https://phore.st/rr4Se" target="_blank" rel="noopener">
+        <div class="img"><img src="leistungen/nassrasur.webp" alt="" width="360" height="360" loading="lazy"></div>
+        <div class="row"><h2>Nassrasur</h2><span class="price">33 €</span></div>
+        <p class="meta">ca. 30 Min <span>·</span> Getränk inklusive</p>
+        <p class="desc">Ein Ritual der alten Schule. Warme Kompresse, gründliche Vorbereitung der Haut, dann die Rasur mit dem Messer – präzise, ruhig und hautschonend. Zum Abschluss kühle Kompresse, Pflege und ein frisches Hautgefühl, das bleibt.</p>
+        <span class="cta">Buchen →</span>
+      </a></li>
+      <li class="service"><a href="https://phore.st/ITkMm" target="_blank" rel="noopener">
+        <div class="img"><img src="leistungen/kinder.webp" alt="" width="360" height="360" loading="lazy"></div>
+        <div class="row"><h2>Kinderhaarschnitt</h2><span class="price">25 €</span></div>
+        <p class="meta">bis 15 Jahre <span>·</span> ca. 30 Min</p>
+        <p class="desc">Der erste Eindruck zählt – auch bei den Kleinen. Mit Geduld, Feingefühl und Stil kümmern wir uns um den passenden Schnitt. Eltern dürfen gern dabei sein und bekommen einen Kaffee aufs Haus.</p>
+        <span class="cta">Buchen →</span>
+      </a></li>
+    </ul>
+    <p class="tax">Alle Preise inkl. MwSt.</p>
+
+    <!-- Buchung & Bezahlung, Öffnungszeiten (von groomingstudios.de) -->
+    <section class="know" aria-labelledby="knowTitle">
+      <p class="eyebrow">Gut zu wissen</p>
+      <h2 class="sec-title" id="knowTitle">Buchung &amp; Bezahlung</h2>
+      <ul class="know-list">
+        <li><h3>Online buchen</h3><p>Service auswählen, Wunschtermin anklicken, fertig. Deine Buchung ist verbindlich.</p></li>
+        <li><h3>Ohne Termin</h3><p>Du kannst auch spontan vorbeikommen – ohne Termin kann es zu Wartezeiten kommen.</p></li>
+        <li><h3>Bezahlung</h3><p>Ganz bequem vor Ort, bar oder mit Karte.</p></li>
+        <li><h3>Fragen?</h3><p>Schreib uns per E-Mail oder WhatsApp, oder ruf einfach an.</p></li>
+      </ul>
+      <div class="info-grid">
+        <div>
+          <h3>Öffnungszeiten</h3>
+          <dl class="hours"><dt>Di – Fr</dt><dd>9 – 21 Uhr</dd><dt>Sa</dt><dd>8 – 18 Uhr</dd><dt>So &amp; Mo</dt><dd class="off">Ruhetag</dd></dl>
+        </div>
+        <div>
+          <h3>Adresse</h3>
+          <p>Endersbacher Str. 50<br>71334 Waiblingen / Beinstein</p>
+        </div>
+        <div>
+          <h3>Kontakt</h3>
+          <p><a href="tel:+4915560077101">+49 155 60077101</a><br><a href="mailto:hello@groomingstudios.de">hello@groomingstudios.de</a></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-foot">
+    <span>© 2025 GROOMING STUDIOS by 1o1BARBERS</span>
+    <div class="m-legal">
+      <a href="https://groomingstudios.de/impressum/" target="_blank" rel="noopener">Impressum</a>
+      <a href="https://groomingstudios.de/datenschutzerklarung/" target="_blank" rel="noopener">Datenschutz</a>
+      <a href="https://groomingstudios.de/agb/" target="_blank" rel="noopener">AGB</a>
+      <a href="https://groomingstudios.de/widerrufsrecht/" target="_blank" rel="noopener">Widerrufsrecht</a>
+    </div>
+  </footer>
+
+<script src="menu.js"></script>
+</body>
+</html>

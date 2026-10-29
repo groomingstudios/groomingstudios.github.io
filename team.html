@@ -1,0 +1,457 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Team – Grooming Studios Waiblingen</title>
+<meta name="description" content="Nikola, Viktor und Daniel: die Barber von Grooming Studios in Waiblingen-Beinstein. Nimm Platz und lerne sie kennen.">
+<link rel="canonical" href="https://groomingstudios.de/team/">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="icons/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="icons/icon-192.png" sizes="192x192" type="image/png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Grooming Studios">
+<meta property="og:locale" content="de_DE">
+<meta property="og:title" content="Team – Grooming Studios Waiblingen">
+<meta property="og:description" content="Nikola, Viktor und Daniel: die Barber von Grooming Studios in Waiblingen-Beinstein.">
+<meta property="og:image" content="https://groomingstudios.de/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="site.css">
+<style>
+  html, body { height: 100%; overflow: hidden; }
+  body { padding-bottom: 0 !important; }
+  #gl { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
+
+  /* ---------- Übersicht: drei große Namen ---------- */
+  .roster {
+    position: fixed; z-index: 4; left: clamp(16px, 6vw, 110px); top: 50%; transform: translateY(-50%);
+    display: flex; flex-direction: column; gap: clamp(6px, 1.4vh, 14px);
+    transition: opacity .5s ease, transform .7s cubic-bezier(.6, 0, .3, 1);
+  }
+  .roster .eyebrow { margin-bottom: clamp(14px, 3vh, 30px); }
+  .roster button {
+    display: grid; grid-template-columns: auto auto; align-items: baseline; justify-content: start; gap: 0 18px;
+    padding: 4px 0; background: none; border: 0; cursor: pointer; text-align: left; color: var(--fg);
+  }
+  .roster .no { font: 400 11px/1 "Inter", sans-serif; letter-spacing: .2em; color: var(--muted); }
+  /* gleiche Schrift wie die Menü-Links; Hover: Name wird hell, Linie läuft von links ein */
+  .roster .nm {
+    position: relative;
+    font: 500 clamp(30px, 4.6vw, 60px)/1.15 "Inter", sans-serif; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--muted); transition: color .3s;
+  }
+  .roster .nm::after {
+    content: ""; position: absolute; left: 0; right: .18em; bottom: -6px; height: 1px; background: var(--fg);
+    transform: scaleX(0); transform-origin: left; transition: transform .35s cubic-bezier(.2, .7, .2, 1);
+  }
+  .roster .sit {
+    grid-column: 2; margin-top: 16px; font: 400 10px/1 "Inter", sans-serif; letter-spacing: .3em; text-transform: uppercase; color: var(--muted);
+    opacity: 0; transform: translateX(-6px); transition: opacity .3s, transform .4s cubic-bezier(.2, .7, .2, 1);
+  }
+  .roster button:hover .nm, .roster button:focus-visible .nm, .roster button.hot .nm { color: var(--fg); }
+  .roster button:hover .nm::after, .roster button:focus-visible .nm::after, .roster button.hot .nm::after { transform: scaleX(1); }
+  .roster button:hover .sit, .roster button:focus-visible .sit, .roster button.hot .sit { opacity: 1; transform: none; }
+  .roster button:focus-visible { outline: none; }
+  html.seated .roster { opacity: 0; transform: translate(-40px, -50%); pointer-events: none; }
+
+  /* ---------- Spiegel: Inhalt liegt genau auf dem 3D-Spiegel ---------- */
+  .mirror {
+    position: fixed; z-index: 4;
+    left: var(--mx, 30vw); top: var(--my, 15vh); width: var(--mw, 40vw); height: var(--mh, 70vh);
+    padding: clamp(22px, 3vw, 40px) clamp(20px, 2.6vw, 36px);
+    overflow-y: auto; overscroll-behavior: contain; scrollbar-width: none;
+    /* Inhalt blendet am Spiegelrand aus statt darüber hinauszulaufen */
+    -webkit-mask-image: linear-gradient(transparent, #000 22px, #000 calc(100% - 28px), transparent);
+            mask-image: linear-gradient(transparent, #000 22px, #000 calc(100% - 28px), transparent);
+    display: flex; flex-direction: column; gap: 26px;
+    text-shadow: 0 1px 12px rgba(0, 0, 0, .8);
+    /* dunkelt das Glas hinter dem Text ab, oben und unten bleibt die Spiegelung sichtbar */
+    background: linear-gradient(rgba(0, 0, 0, .25), rgba(0, 0, 0, .55) 30%, rgba(0, 0, 0, .55) 75%, rgba(0, 0, 0, .2));
+    opacity: 0; visibility: hidden; filter: blur(6px);
+    transition: opacity .6s ease, filter .8s ease, visibility 0s linear .6s;
+  }
+  .mirror::-webkit-scrollbar { display: none; }
+  html.mirror-on .mirror { opacity: 1; visibility: visible; filter: none; transition: opacity .9s ease, filter 1s ease; }
+  .m-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .m-tabs { display: flex; gap: 16px; }
+  .m-tabs button, .stand {
+    padding: 4px 0; background: none; border: 0; cursor: pointer;
+    font: 500 10px/1 "Inter", sans-serif; letter-spacing: .26em; text-transform: uppercase; color: var(--muted);
+    transition: color .2s;
+  }
+  .m-tabs button[aria-current="true"] { color: var(--fg); }
+  .m-tabs button:hover, .m-tabs button:focus-visible, .stand:hover, .stand:focus-visible { color: var(--fg); outline: none; }
+  .stand::before { content: "↑ "; }
+  .m-body { display: flex; flex-direction: column; gap: 24px; }
+  .m-body.swap { animation: m-swap .6s ease both; }
+  @keyframes m-swap { from { opacity: 0; filter: blur(5px); } }
+  .m-head { display: flex; align-items: center; gap: 20px; }
+  .m-head img { width: 96px; height: 96px; object-fit: cover; border-radius: 3px; filter: grayscale(1) contrast(1.05); }
+  .m-head h2 { font: 600 clamp(24px, 2.6vw, 36px)/1 "Inter", sans-serif; letter-spacing: .22em; text-transform: uppercase; }
+  .m-role { margin-top: 10px; font: 400 11px/1.4 "Inter", sans-serif; letter-spacing: .32em; text-transform: uppercase; color: var(--muted); }
+  .m-lang { margin-top: 6px; font: 400 12px/1.5 "Inter", sans-serif; color: var(--muted); }
+  .m-bio { font: 300 14px/1.65 "Inter", sans-serif; color: #d9d6d0; }
+  .m-bio p + p { margin-top: .8em; }
+  .m-more {
+    margin-top: 10px; padding: 0; background: none; border: 0; cursor: pointer;
+    font: 400 10px/1.4 "Inter", sans-serif; letter-spacing: .2em; text-transform: uppercase; color: var(--muted);
+  }
+  .m-more:hover, .m-more:focus-visible { color: var(--fg); outline: none; }
+  .m-score { display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px 12px; }
+  .m-score b { font: 500 30px/1 "Inter", sans-serif; }
+  .m-score span { font-size: 12px; letter-spacing: .18em; }
+  .m-score a { font: 400 10px/1.3 "Inter", sans-serif; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); text-decoration: none; }
+  .m-score a:hover, .m-score a:focus-visible { color: var(--fg); outline: none; }
+  .m-revs { list-style: none; display: grid; gap: 14px; }
+  .m-revs li { padding-left: 16px; border-left: 1px solid rgba(242, 239, 233, .3); font: 300 14px/1.6 "Inter", sans-serif; color: #d9d6d0; }
+  .m-revs li small { display: block; margin-top: 6px; font: 400 10px/1.3 "Inter", sans-serif; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+  .m-book { align-self: flex-start; margin-bottom: 8px; }
+
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  @media (max-width: 720px) {
+    .roster { left: 16px; right: 16px; top: auto; bottom: calc(var(--bar-h) + 24px); transform: none; gap: 2px; }
+    .roster .eyebrow { margin-bottom: 12px; }
+    .roster .nm { font-size: clamp(28px, 9vw, 40px); }
+    .roster .sit { display: none; }
+    html.seated .roster { transform: translateY(30px); }
+    .mirror { padding: 20px 18px; gap: 20px; }
+    .m-head img { width: 76px; height: 76px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .roster, .mirror { transition-duration: .01s !important; } }
+</style>
+</head>
+<body data-page="team">
+  <div class="site-head">
+    <a class="book btn" href="https://www.phorest.com/salon/groomingstudios" target="_blank" rel="noopener">Buchen</a>
+    <header class="brand">
+      <h1><a href="index.html"><img src="logo.webp" alt="Grooming Studios" width="2000" height="140"></a></h1>
+    </header>
+  </div>
+
+  <canvas id="gl" aria-hidden="true"></canvas>
+
+  <nav class="roster" id="roster" aria-label="Team">
+    <p class="eyebrow">Das Team</p>
+  </nav>
+
+  <!-- Spiegel vor dem Stuhl: Infos zum Barber -->
+  <section class="mirror" id="mirror" aria-hidden="true" aria-live="polite">
+    <div class="m-top">
+      <div class="m-tabs" id="mTabs" role="group" aria-label="Barber wechseln"></div>
+      <button class="stand" id="stand" type="button">Aufstehen</button>
+    </div>
+    <div class="m-body" id="mBody">
+      <div class="m-head">
+        <img id="mImg" src="" alt="">
+        <div><h2 id="mName"></h2><p class="m-role" id="mRole"></p><p class="m-lang" id="mLang"></p></div>
+      </div>
+      <div><div class="m-bio" id="mBio"></div><button class="m-more" id="mMore" type="button" aria-expanded="false">Mehr lesen ↓</button></div>
+      <div class="m-score"><b id="mScore"></b><span aria-hidden="true">★★★★★</span><a id="mGoogle" href="" target="_blank" rel="noopener"></a></div>
+      <ul class="m-revs" id="mRevs"></ul>
+      <a class="btn m-book" id="mBook" href="" target="_blank" rel="noopener"></a>
+    </div>
+  </section>
+
+<script src="menu.js"></script>
+<script src="three.min.js"></script>
+<script src="chair.js"></script>
+<script src="team-data.js"></script>
+<script>
+(() => {
+  const { TEAM, GOOGLE, bookFor } = GS_TEAM;
+  const $ = id => document.getElementById(id);
+  const root = document.documentElement;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const canvas = $('gl');
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, stencil: true });
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.05;
+  renderer.setClearColor(0x000000, 0);
+  renderer.autoClear = false;
+
+  // drei Durchgänge: echte Welt → Spiegelwelt (nur innerhalb des Spiegels) → Glas darüber
+  const scene = new THREE.Scene(), mirrorScene = new THREE.Scene(), glassScene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(30, 1, 0.05, 100);
+  const { buildModel, labelTex } = GSChair(renderer, scene);
+  mirrorScene.environment = glassScene.environment = scene.environment;
+
+  const MZ = 3.4;                       // Spiegel steht vor dem Stuhl (Stuhl schaut nach +z)
+  const MODEL = buildModel();
+
+  /* ---------- Der echte Stuhl, Name hinten auf der Lehne ---------- */
+  const nameTex = TEAM.map(t => labelTex(t.name.toUpperCase(), { h: 256, size: 118, weight: 600, spacing: 24, color: '#efeee9' }));
+  const tagMat = new THREE.MeshBasicMaterial({ map: nameTex[1], transparent: true, depthWrite: false, toneMapped: false });
+  const tag = new THREE.Mesh(new THREE.PlaneGeometry(0.62, 0.155), tagMat);
+  tag.rotation.y = Math.PI;
+  MODEL.getObjectByName('nameAnchor').add(tag);
+  const lift = new THREE.Group(); lift.add(MODEL); scene.add(lift);
+
+  const glowTex = (() => {
+    const c = document.createElement('canvas'); c.width = c.height = 128;
+    const x = c.getContext('2d'), gr = x.createRadialGradient(64, 64, 0, 64, 64, 64);
+    gr.addColorStop(0, 'rgba(70,70,74,.55)'); gr.addColorStop(1, 'rgba(0,0,0,0)');
+    x.fillStyle = gr; x.fillRect(0, 0, 128, 128);
+    return new THREE.CanvasTexture(c);
+  })();
+  const glow = () => {
+    const m = new THREE.Mesh(new THREE.PlaneGeometry(2.6, 2.6).rotateX(-Math.PI / 2),
+      new THREE.MeshBasicMaterial({ map: glowTex, transparent: true, depthWrite: false }));
+    m.position.y = 0.002; return m;
+  };
+  scene.add(glow());
+
+  /* ---------- Spiegelwelt: gespiegelter Stuhl hinter dem Glas ---------- */
+  // Nur dort zeichnen, wo der Spiegel ist (Stencil-Maske)
+  const inMirror = m => Object.assign(m.clone(), {
+    stencilWrite: true, stencilRef: 1, stencilFunc: THREE.EqualStencilFunc,
+    stencilFail: THREE.KeepStencilOp, stencilZFail: THREE.KeepStencilOp, stencilZPass: THREE.KeepStencilOp
+  });
+  const twin = new THREE.Group();
+  const twinChair = MODEL.clone(true); twinChair.getObjectByName('nameAnchor').visible = false;
+  twin.add(twinChair, glow());
+  const mats = new Map();
+  twin.traverse(o => { if (o.material) { if (!mats.has(o.material)) mats.set(o.material, inMirror(o.material)); o.material = mats.get(o.material); } });
+  twin.scale.z = -1; twin.position.z = 2 * MZ;
+  mirrorScene.add(twin);
+  // gespiegeltes Licht, damit die Vorderseite im Spiegel hell ist wie in echt
+  mirrorScene.add(new THREE.HemisphereLight(0xffffff, 0x111111, 0.25));
+  for (const [c, k, p] of [[0xfff2dc, 2.4, [-4, 7, 6]], [0xbcd0ff, 1.1, [5, 4, -6]]]) {
+    const l = new THREE.DirectionalLight(c, k);
+    l.position.set(p[0], p[1], 2 * MZ - p[2]); l.target.position.set(0, 0, 2 * MZ);
+    mirrorScene.add(l, l.target);
+  }
+
+  // Spiegel: Maske (in der echten Welt) + getöntes Glas + Chromrahmen
+  const mirror = new THREE.Group(); mirror.position.z = MZ;
+  const mask = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.MeshBasicMaterial({
+    colorWrite: false, depthWrite: false, side: THREE.DoubleSide,
+    stencilWrite: true, stencilRef: 1, stencilFunc: THREE.AlwaysStencilFunc, stencilZPass: THREE.ReplaceStencilOp
+  }));
+  mask.renderOrder = 10;
+  const glass = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.MeshPhysicalMaterial({
+    color: 0x000000, roughness: 0.04, metalness: 0, clearcoat: 1, clearcoatRoughness: 0.02, envMapIntensity: 0.3,
+    transparent: true, opacity: 0.7, side: THREE.DoubleSide, depthWrite: false
+  }));
+  const frameMat = new THREE.MeshStandardMaterial({ color: 0xffffff, metalness: 1, roughness: 0.12 });
+  const rimBars = new THREE.Group();
+  mirror.add(mask); scene.add(mirror);
+  const glassHolder = new THREE.Group(); glassHolder.position.z = MZ; glassHolder.add(glass, rimBars); glassScene.add(glassHolder);
+  function sizeMirror(w, h, y) {
+    for (const o of [mask, glass]) { o.scale.set(w, h, 1); }
+    mirror.position.y = glassHolder.position.y = y;
+    rimBars.clear();
+    const t = 0.03;
+    for (const [bw, bh, x, yy] of [[w + 2 * t, t, 0, h / 2 + t / 2], [w + 2 * t, t, 0, -h / 2 - t / 2], [t, h, -w / 2 - t / 2, 0], [t, h, w / 2 + t / 2, 0]]) {
+      const b = new THREE.Mesh(new THREE.BoxGeometry(bw, bh, 0.03), frameMat); b.position.set(x, yy, 0); rimBars.add(b);
+    }
+  }
+
+  /* ---------- Kamera: Übersicht und Sitzplatz ---------- */
+  const EYE = new THREE.Vector3(0, 1.72, -0.5);     // Kopfhöhe im Stuhl, vor der Kopfstütze
+  const view = { ov: {}, seat: {} };
+  let rect = null;                                  // Spiegel auf dem Bildschirm (CSS-Pixel)
+  function resize() {
+    const w = innerWidth, h = innerHeight;
+    renderer.setSize(w, h, false);
+    camera.aspect = w / h;
+    const portrait = w < 720;
+    // Spiegel-Fläche auf dem Bildschirm
+    const headB = document.querySelector('.brand').getBoundingClientRect().bottom;
+    const bar = portrait ? parseFloat(getComputedStyle(document.querySelector('.btn.book')).bottom) + 48 : 0;
+    if (portrait) rect = { x: 14, y: headB + 18, w: w - 28, h: h - headB - 18 - bar - 14 };
+    else { const mh = h - headB - 64, mw = Math.min(600, w * 0.42, mh * 0.78); rect = { x: (w - mw) / 2, y: headB + 32, w: mw, h: mh }; }
+    // Sitzplatz: Blick geradeaus auf den Spiegel; Spiegelgröße so, dass er genau auf rect liegt
+    const fov = portrait ? 64 : 52;
+    const D = MZ - EYE.z, H = D * Math.tan(THREE.MathUtils.degToRad(fov / 2)), W = H * camera.aspect;
+    const mw = rect.w / w * 2 * W, mh = rect.h / h * 2 * H;
+    const my = EYE.y + (0.5 - (rect.y + rect.h / 2) / h) * 2 * H;
+    sizeMirror(mw, mh, my);
+    view.seat = { pos: EYE.clone(), look: new THREE.Vector3(0, EYE.y, MZ), fov, off: [0, 0] };
+    // Übersicht: schräg hinter dem Stuhl, Spiegel im Hintergrund
+    view.ov = portrait
+      ? { pos: new THREE.Vector3(-5.6, 5.4, -12.5), look: new THREE.Vector3(1.0, 1.7, 1.7), fov: 34, off: [0, -0.15] }
+      : { pos: new THREE.Vector3(-4.4, 3.1, -7.8), look: new THREE.Vector3(0.2, 1.45, 1.6), fov: 30, off: [0.2, 0.03] };
+    const m = root.style;
+    m.setProperty('--mx', rect.x + 'px'); m.setProperty('--my', rect.y + 'px');
+    m.setProperty('--mw', rect.w + 'px'); m.setProperty('--mh', rect.h + 'px');
+    if (!flight) place(seated ? 1 : 0);
+  }
+
+  /* ---------- Flug: hinter dem Stuhl hoch, über die Kopfstütze, hineinsetzen ---------- */
+  let seated = false, flight = null, k = 0;
+  const ease = t => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  const lookEase = t => t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+  let curve = null;
+  function buildCurve() {
+    const a = view.ov.pos, b = view.seat.pos;
+    curve = new THREE.CatmullRomCurve3([
+      a.clone(),
+      new THREE.Vector3(a.x * 0.35, 3.15, -2.6),
+      new THREE.Vector3(0, 2.85, b.z + 0.02),
+      b.clone()
+    ], false, 'centripetal');
+  }
+  const tmpLook = new THREE.Vector3(), mouse = { x: 0, y: 0, sx: 0, sy: 0 };
+  function place(t) {
+    k = t;
+    const e = ease(t);
+    if (!curve) buildCurve();
+    camera.position.copy(t <= 0 ? view.ov.pos : t >= 1 ? view.seat.pos : curve.getPoint(e));
+    // kurzes Einsinken beim Hinsetzen
+    if (t > 0.78 && t < 1) camera.position.y -= 0.07 * Math.sin(Math.PI * (t - 0.78) / 0.22);
+    tmpLook.lerpVectors(view.ov.look, view.seat.look, lookEase(Math.min(1, t * 1.15)));
+    // Übersicht: Blick folgt leicht der Maus. Im Sitz steht die Kamera still, damit der Spiegel genau unter dem Inhalt bleibt
+    const free = 1 - Math.min(1, t / 0.6);
+    tmpLook.x += mouse.sx * 0.35 * free;
+    tmpLook.y += mouse.sy * 0.2 * free;
+    camera.lookAt(tmpLook);
+    camera.fov = THREE.MathUtils.lerp(view.ov.fov, view.seat.fov, ease(Math.min(1, t * 1.1)));
+    const ox = THREE.MathUtils.lerp(view.ov.off[0], 0, e), oy = THREE.MathUtils.lerp(view.ov.off[1], 0, e);
+    const w = innerWidth, h = innerHeight;
+    if (ox || oy) camera.setViewOffset(w, h, -ox * w, -oy * h, w, h); else camera.clearViewOffset();
+    camera.updateProjectionMatrix();
+  }
+  function fly(to, done) {
+    buildCurve();
+    flight = { from: k, to, start: performance.now(), dur: reduce ? 1 : (to ? 2600 : 2000), done };
+  }
+
+  /* ---------- Inhalte ---------- */
+  let active = -1;
+  const roster = $('roster');
+  TEAM.forEach((t, i) => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.innerHTML = `<span class="no">0${i + 1}</span><span class="nm">${t.name}</span><span class="sit">Platz nehmen →</span>`;
+    b.setAttribute('aria-label', 'Bei ' + t.name + ' Platz nehmen');
+    b.addEventListener('mouseenter', () => hover(i));
+    b.addEventListener('focus', () => hover(i));
+    b.addEventListener('click', () => sit(i));
+    roster.append(b);
+    const tb = document.createElement('button');
+    tb.type = 'button'; tb.textContent = t.name;
+    tb.addEventListener('click', () => { if (i !== active) { fill(i, true); history.replaceState(null, '', '#' + t.name.toLowerCase()); } });
+    $('mTabs').append(tb);
+    new Image().src = t.img;
+  });
+  let bump = 0;
+  function hover(i) {
+    if (seated || flight) return;
+    if (tagMat.map !== nameTex[i]) { tagMat.map = nameTex[i]; bump = 1; }
+    [...roster.querySelectorAll('button')].forEach((b, n) => b.classList.toggle('hot', n === i));
+  }
+
+  function sentences(t) { return t.bio.join(' ').split(/(?<=[.!?])\s+/); }
+  function renderBio(t, open) {
+    const s = sentences(t);
+    const paras = open ? t.bio : [s.slice(0, 2).join(' ')];
+    $('mBio').replaceChildren(...paras.map(p => Object.assign(document.createElement('p'), { textContent: p })));
+    $('mMore').hidden = s.length <= 2;
+    $('mMore').textContent = open ? 'Weniger ↑' : 'Mehr lesen ↓';
+    $('mMore').setAttribute('aria-expanded', open);
+  }
+  $('mMore').addEventListener('click', () => renderBio(TEAM[active], $('mMore').getAttribute('aria-expanded') !== 'true'));
+
+  function fill(i, swap) {
+    active = i;
+    const t = TEAM[i];
+    tagMat.map = nameTex[i];
+    $('mImg').src = t.img; $('mImg').alt = t.name;
+    $('mName').textContent = t.name;
+    $('mRole').textContent = t.role;
+    $('mLang').textContent = t.lang ? 'Spricht ' + t.lang : '';
+    renderBio(t, false);
+    $('mScore').textContent = GOOGLE.score;
+    $('mGoogle').textContent = GOOGLE.count + ' Bewertungen auf Google →'; $('mGoogle').href = GOOGLE.url;
+    $('mRevs').replaceChildren(...t.reviews.slice(0, 2).map(r => {
+      const li = document.createElement('li');
+      li.append('„' + r.text + '“', Object.assign(document.createElement('small'), { textContent: r.by + ' ★★★★★' }));
+      return li;
+    }));
+    $('mBook').textContent = 'Bei ' + t.name + ' buchen';
+    $('mBook').href = bookFor(t);
+    [...$('mTabs').children].forEach((b, n) => b.setAttribute('aria-current', n === i));
+    const body = $('mBody');
+    if (swap) { body.classList.remove('swap'); void body.offsetWidth; body.classList.add('swap'); }
+    $('mirror').scrollTop = 0;
+  }
+
+  function sit(i, push = true) {
+    if (flight) return;
+    fill(i, false);
+    if (push) history.pushState({ sit: i }, '', '#' + TEAM[i].name.toLowerCase());
+    if (seated) return;
+    seated = true;
+    root.classList.add('seated');
+    fly(1, () => {
+      root.classList.add('mirror-on');
+      $('mirror').setAttribute('aria-hidden', 'false');
+      $('stand').focus({ preventScroll: true });
+    });
+  }
+  function stand(push = true) {
+    if (!seated || flight) return;
+    if (push) history.pushState(null, '', location.pathname);
+    root.classList.remove('mirror-on');
+    $('mirror').setAttribute('aria-hidden', 'true');
+    setTimeout(() => {
+      fly(0, () => {
+        seated = false;
+        root.classList.remove('seated');
+        roster.querySelectorAll('button')[active]?.focus({ preventScroll: true });
+      });
+    }, reduce ? 0 : 350);
+  }
+  $('stand').addEventListener('click', () => stand());
+  // capture: läuft vor dem Menü, damit Esc bei offenem Menü nur das Menü schließt
+  addEventListener('keydown', e => { if (e.key === 'Escape' && seated && !root.classList.contains('menu-open')) stand(); }, true);
+  const fromHash = () => TEAM.findIndex(t => '#' + t.name.toLowerCase() === location.hash.toLowerCase());
+  addEventListener('popstate', () => {
+    const i = fromHash();
+    if (i >= 0) { if (seated) fill(i, true); else sit(i, false); } else stand(false);
+  });
+
+  addEventListener('pointermove', e => {
+    if (e.pointerType !== 'mouse') return;
+    mouse.x = e.clientX / innerWidth * 2 - 1; mouse.y = -(e.clientY / innerHeight * 2 - 1);
+  });
+
+  /* ---------- Schleife ---------- */
+  const clock = new THREE.Clock();
+  function frame(now) {
+    const dt = Math.min(clock.getDelta(), 0.05);
+    mouse.sx += (mouse.x - mouse.sx) * Math.min(1, dt * 3);
+    mouse.sy += (mouse.y - mouse.sy) * Math.min(1, dt * 3);
+    if (flight) {
+      const p = Math.min(1, (now - flight.start) / flight.dur);
+      place(THREE.MathUtils.lerp(flight.from, flight.to, p));
+      if (p >= 1) { const d = flight.done; flight = null; d && d(); }
+    } else place(k);
+    // Hover: Stuhl federt kurz hoch (Hydraulik)
+    bump = Math.max(0, bump - dt * 1.6);
+    lift.position.y = 0.05 * Math.sin(Math.PI * (1 - bump)) * (bump > 0 ? 1 : 0);
+    renderer.clear();
+    renderer.render(scene, camera);
+    renderer.render(mirrorScene, camera);
+    renderer.render(glassScene, camera);
+    requestAnimationFrame(frame);
+  }
+
+  addEventListener('resize', resize);
+  document.fonts.ready.then(resize);
+  resize();
+  hover(1);
+  roster.querySelectorAll('button').forEach(b => b.classList.remove('hot'));
+  requestAnimationFrame(frame);
+  // Direktlink team.html#viktor → gleich Platz nehmen
+  const start = fromHash();
+  if (start >= 0) setTimeout(() => sit(start, false), 500);
+})();
+</script>
+</body>
+</html>
