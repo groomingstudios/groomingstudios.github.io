@@ -106,6 +106,8 @@
   .m-score a:hover, .m-score a:focus-visible { color: var(--fg); outline: none; }
   .m-revs { list-style: none; display: grid; gap: 14px; }
   .m-revs li { padding-left: 16px; border-left: 1px solid rgba(242, 239, 233, .3); font: 300 14px/1.6 "Inter", sans-serif; color: #d9d6d0; }
+  .m-revs + .m-more { margin-top: 14px; }
+  .m-revs li.new { animation: m-swap .5s ease both; }
   .m-revs li small { display: block; margin-top: 6px; font: 400 10px/1.3 "Inter", sans-serif; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
   .m-book { align-self: flex-start; margin-bottom: 8px; }
 
@@ -150,7 +152,7 @@
       </div>
       <div><div class="m-bio" id="mBio"></div><button class="m-more" id="mMore" type="button" aria-expanded="false">Mehr lesen ↓</button></div>
       <div class="m-score"><b id="mScore"></b><span aria-hidden="true">★★★★★</span><a id="mGoogle" href="" target="_blank" rel="noopener"></a></div>
-      <ul class="m-revs" id="mRevs"></ul>
+      <div><ul class="m-revs" id="mRevs"></ul><button class="m-more" id="mMoreRev" type="button" aria-expanded="false" aria-controls="mRevs">Mehr Bewertungen ↓</button></div>
       <a class="btn m-book" id="mBook" href="" target="_blank" rel="noopener"></a>
     </div>
   </section>
@@ -358,6 +360,22 @@
   }
   $('mMore').addEventListener('click', () => renderBio(TEAM[active], $('mMore').getAttribute('aria-expanded') !== 'true'));
 
+  // Bewertungen: immer 2 sichtbar, der Rest über „Mehr Bewertungen“
+  const REV_SHORT = 2;
+  function renderReviews(t, open) {
+    $('mRevs').replaceChildren(...t.reviews.slice(0, open ? t.reviews.length : REV_SHORT).map((r, n) => {
+      const li = document.createElement('li');
+      if (open && n >= REV_SHORT) li.className = 'new';
+      li.append('„' + r.text + '“', Object.assign(document.createElement('small'), { textContent: r.by + ' ★★★★★' }));
+      return li;
+    }));
+    const extra = t.reviews.length - REV_SHORT;
+    $('mMoreRev').hidden = extra <= 0;
+    $('mMoreRev').textContent = open ? 'Weniger ↑' : 'Mehr Bewertungen (' + extra + ') ↓';
+    $('mMoreRev').setAttribute('aria-expanded', open);
+  }
+  $('mMoreRev').addEventListener('click', () => renderReviews(TEAM[active], $('mMoreRev').getAttribute('aria-expanded') !== 'true'));
+
   function fill(i, swap) {
     active = i;
     const t = TEAM[i];
@@ -369,11 +387,7 @@
     renderBio(t, false);
     $('mScore').textContent = GOOGLE.score;
     $('mGoogle').textContent = GOOGLE.count + ' Bewertungen auf Google →'; $('mGoogle').href = GOOGLE.url;
-    $('mRevs').replaceChildren(...t.reviews.slice(0, 2).map(r => {
-      const li = document.createElement('li');
-      li.append('„' + r.text + '“', Object.assign(document.createElement('small'), { textContent: r.by + ' ★★★★★' }));
-      return li;
-    }));
+    renderReviews(t, false);
     $('mBook').textContent = 'Bei ' + t.name + ' buchen';
     $('mBook').href = bookFor(t);
     [...$('mTabs').children].forEach((b, n) => b.setAttribute('aria-current', n === i));

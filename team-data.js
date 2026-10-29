@@ -1,6 +1,6 @@
 /* Team-Daten: gemeinsam für Startseite und Teamseite */
 (() => {
-  // Texte & Bilder von groomingstudios.de/team; Bewertungen: Nikola von Google Maps, Viktor und Daniel vom Betreiber geliefert (alle 5 Sterne)
+  // Texte & Bilder von groomingstudios.de/team; Bewertungen: Nikola von Google Maps (Marc, Jonas) und vom Betreiber (Magnus, Lucas), Viktor und Daniel vom Betreiber geliefert (alle 5 Sterne)
   // Buchung direkt beim Barber: Phorest-Mitarbeiter-ID (staffId). Ohne ID → allgemeine Buchungsseite
   const BOOK = 'https://www.phorest.com/salon/groomingstudios';
   const bookFor = t => t.staffId ? BOOK + '/book/services?staffId=' + t.staffId : BOOK;
@@ -12,7 +12,9 @@
             'Mit seiner direkten Art, scharfem Humor und Leidenschaft fürs Handwerk bringt er jeden Mann in Bestform.'],
       reviews: [
         { text: 'War mein erster Besuch und wurde sehr gut von Nikola beraten. Er hat einen super Job gemacht, ich komme wieder!', by: 'Marc B.', when: 'vor 3 Monaten' },
-        { text: 'Ich hatte eigentlich nicht vor den Friseur zu wechseln, aber Nikola ist einfach grandios. Seine Beratung ist offen, ehrlich und sehr kompetent. Seine Leistung toppt aber alles, ein absoluter Meister seines Handwerks!', by: 'Jonas T.', when: 'vor 2 Monaten' }
+        { text: 'Ich hatte eigentlich nicht vor den Friseur zu wechseln, aber Nikola ist einfach grandios. Seine Beratung ist offen, ehrlich und sehr kompetent. Seine Leistung toppt aber alles, ein absoluter Meister seines Handwerks!', by: 'Jonas T.', when: 'vor 2 Monaten' },
+        { text: 'Es geht nicht besser, Nikola schneidet meine Haare jedes mal aufs neue perfekt! Die Entspannung geht schon beim Betreten des Ladens los. Man wird freundlich empfangen und es wir gleich etwas zu trinken angeboten. Super Atmosphäre, Super nette Leute und vorallem ausgezeichnete Haarschnitte!', by: 'Magnus' },
+        { text: 'Super Friseur! Bin mit dem Haarschnitt echt zufrieden. Es wurde genau auf meine Wünsche eingegangen und das Ergebnis ist top. Dazu eine entspannte Atmosphäre und ein sympathischer Friseur. Komme auf jeden Fall wieder!', by: 'Lucas' }
       ]
     },
     {
