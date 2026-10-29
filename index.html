@@ -76,6 +76,8 @@
 <style>
   /* Scroll-Strecke: 4.5 Bildschirmhöhen, Bühne bleibt stehen */
   .scroller { height: 650vh; position: relative; }
+  /* Handy: ein Wisch schiebt weiter als ein Mausrad, darum halbe Strecke */
+  @media (pointer: coarse), (max-width: 720px) { .scroller { height: 300vh; } }
   .stage {
     position: sticky; top: 0;
     height: 100vh; height: 100svh;
