@@ -120,7 +120,7 @@
     .mirror { padding: 20px 18px; gap: 20px; }
     .m-head img { width: 76px; height: 76px; }
   }
-  @media (prefers-reduced-motion: reduce) { .roster, .mirror { transition-duration: .01s !important; } }
+  @media (prefers-reduced-motion: reduce) { .roster, .mirror { transition-duration: .3s !important; } }
 </style>
 </head>
 <body data-page="team">
@@ -303,7 +303,7 @@
     if (!curve) buildCurve();
     camera.position.copy(t <= 0 ? view.ov.pos : t >= 1 ? view.seat.pos : curve.getPoint(e));
     // kurzes Einsinken beim Hinsetzen
-    if (t > 0.78 && t < 1) camera.position.y -= 0.07 * Math.sin(Math.PI * (t - 0.78) / 0.22);
+    if (!reduce && t > 0.78 && t < 1) camera.position.y -= 0.07 * Math.sin(Math.PI * (t - 0.78) / 0.22);
     tmpLook.lerpVectors(view.ov.look, view.seat.look, lookEase(Math.min(1, t * 1.15)));
     // Übersicht: Blick folgt leicht der Maus. Im Sitz steht die Kamera still, damit der Spiegel genau unter dem Inhalt bleibt
     const free = 1 - Math.min(1, t / 0.6);
@@ -318,7 +318,8 @@
   }
   function fly(to, done) {
     buildCurve();
-    flight = { from: k, to, start: performance.now(), dur: reduce ? 1 : (to ? 2600 : 2000), done };
+    // „Weniger Bewegung“ (unter Windows oft durch ausgeschaltete Animationseffekte): kürzere, ruhige Fahrt statt Sprung
+    flight = { from: k, to, start: performance.now(), dur: reduce ? (to ? 1500 : 1200) : (to ? 2600 : 2000), done };
   }
 
   /* ---------- Inhalte ---------- */
